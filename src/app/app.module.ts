@@ -1,3 +1,4 @@
+import { AuthGuard } from './services/auth-guard.service';
 import { ErrorHandler, NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -21,6 +22,11 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
+import { AdminComponent } from './admin/admin.component';
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -37,6 +43,11 @@ import { NavbarComponent } from './navbar/navbar.component';
     GithubcComponent,
     NavbarComponent,
     ProfileComponent,
+    LoginComponent,
+    LogoutComponent,
+    AdminComponent,
+    HomeComponent,
+    NotAuthorizedComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,9 +59,17 @@ import { NavbarComponent } from './navbar/navbar.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent }, // default
       { path: 'followers', component: GithubcComponent },
+      { path: 'users/login', component: LoginComponent },
+      { path: 'users/logout', component: LogoutComponent },
+      {
+        path: 'admin',
+        component: AdminComponent,
+        canActivate: [AuthGuard, AdminAuthGuard],
+      },
       { path: 'profile/:username', component: ProfileComponent },
       { path: 'profile/:username/:level', component: ProfileComponent },
       { path: 'posts', component: PostComponent },
+      { path: 'not-authorized', component: NotAuthorizedComponent }, // ** catches any route
       { path: '**', component: NotFoundComponent }, // ** catches any route
     ]),
   ],
