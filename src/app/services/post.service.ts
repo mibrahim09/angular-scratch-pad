@@ -12,6 +12,6 @@ import { catchError } from 'rxjs/operators';
 })
 export class PostService extends DataService {
   constructor(httpClient: HttpClient) {
-    super('http://ssjsonplaceholder.typicode.com/posts', httpClient);
+    super('http://jsonplaceholder.typicode.com/posts', httpClient);
   }
 }

@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,6 +16,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { PostComponent } from './post/post.component';
 import { GlobalErrorHandler } from './errors/app-error-handler';
 import { GithubcComponent } from './githubc/githubc.component';
+import { RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { NavbarComponent } from './navbar/navbar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +35,8 @@ import { GithubcComponent } from './githubc/githubc.component';
     SignupFormComponent,
     PostComponent,
     GithubcComponent,
+    NavbarComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +44,15 @@ import { GithubcComponent } from './githubc/githubc.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    /* path, component */
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent }, // default
+      { path: 'followers', component: GithubcComponent },
+      { path: 'profile/:username', component: ProfileComponent },
+      { path: 'profile/:username/:level', component: ProfileComponent },
+      { path: 'posts', component: PostComponent },
+      { path: '**', component: NotFoundComponent }, // ** catches any route
+    ]),
   ],
   providers: [{ provide: ErrorHandler, useClass: GlobalErrorHandler }],
   bootstrap: [AppComponent],

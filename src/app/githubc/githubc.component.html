@@ -11,7 +11,7 @@
   <!-- Body -->
   <div>
     <h5 class="fw-bold">
-      {{ f.login }}
+      <a routerLink="/profile/{{ f.id }}">{{ f.login }}</a>
     </h5>
     <a href="{{ f.html_url }}">{{ f.html_url }}</a>
   </div>
