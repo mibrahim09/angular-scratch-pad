@@ -1,4 +1,8 @@
-<form class="border p-3 mb-3 mt-3">
+<form
+  #contactForm="ngForm"
+  class="border p-3 mb-3 mt-3"
+  (ngSubmit)="submit(contactForm)"
+>
   <div class="form-group m-3">
     <label for="firstName">First Name</label>
     <input
@@ -11,13 +15,17 @@
       #firstName="ngModel"
       type="text"
       class="form-control"
+      (change)="log(firstName)"
     />
     <div
       class="alert alert-danger mt-1"
       *ngIf="firstName.touched && !firstName.valid"
     >
       <div *ngIf="firstName.errors?.required">First name is required</div>
-      <div *ngIf="firstName.errors?.minlength">First name minimum size is 3 characters</div>
+      <div *ngIf="firstName.errors?.minlength">
+        First name minimum size is
+        {{ firstName.errors?.minlength.requiredLength }} characters
+      </div>
     </div>
   </div>
   <div class="form-group m-3">
@@ -38,7 +46,54 @@
       Comments are required
     </div>
   </div>
+
+  <div class="form-group m-3 checkbox">
+    <label>
+      <input
+        type="checkbox"
+        name="isSubscribed"
+        checked
+        ngModel
+        #checkbox="ngModel"
+      />
+      Subscribe to newsletter
+    </label>
+  </div>
+
   <div class="form-group m-3">
-    <button class="btn btn-primary">Submit form</button>
+    <label for="contactMethod"></label>
+    <select
+      ngModel
+      name="contactMethod"
+      id="contactMethod"
+      #contactMethod="ngModel"
+    >
+      <option value="" selected disabled hidden>Choose here</option>
+      <option *ngFor="let cmethod of contactMethods" value="{{ cmethod.id }}">
+        {{ cmethod.name }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group m-3">
+    <label for="contactMethodByNgValue"></label>
+    <select
+      ngModel
+      name="contactMethodByNgValue"
+      id="contactMethodByNgValue"
+      #contactMethodByNgValue="ngModel"
+    >
+      <option value="" selected disabled hidden>Choose here</option>
+      <option *ngFor="let cmethod of contactMethods" [ngValue]="cmethod">
+        {{ cmethod.name }}
+      </option>
+    </select>
+  </div>
+
+  {{ contactForm.value | json }}
+  <div class="form-group m-3">
+    <button [disabled]="!contactForm.valid" class="btn btn-primary">
+      Submit form
+    </button>
   </div>
 </form>

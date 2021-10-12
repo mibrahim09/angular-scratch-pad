@@ -1,0 +1,35 @@
+<div class="container m-3">
+  <form [formGroup]="myFormGroup">
+    <div class="form-control">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          formControlName="username"
+          name="username"
+          class="form-control"
+          type="text"
+        />
+        <div *ngIf="usernameBox?.pending">Some async pending...</div>
+        <div
+          *ngIf="usernameBox?.touched && !usernameBox?.valid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="usernameBox?.errors?.required">Username is Required</div>
+          {{ usernameBox?.errors | json }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label
+        ><input
+          formControlName="password"
+          name="password"
+          class="form-control"
+          type="text"
+        />
+      </div>
+      <div class="form-group mt-3">
+        <button class="btn btn-primary">Sign up</button>
+      </div>
+    </div>
+  </form>
+</div>
